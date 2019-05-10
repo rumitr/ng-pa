@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { RfqitemComponent } from './rfqitem/rfqitem.component';
-import { OfferComponent } from './rfqitem/offer/offer.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -13,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HeaderComponent,
     RfqitemComponent,
-    OfferComponent,
   ],
   imports: [
     BrowserModule,
