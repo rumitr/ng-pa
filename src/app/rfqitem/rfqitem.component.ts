@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PaService } from '../service/pa.service';
-import { OffersService } from '../services/offers.service';
 
 
 @Component({
@@ -17,11 +16,37 @@ export class RfqitemComponent implements OnInit {
 
 
    ngOnInit() {
-     this.offers = Object.values(this.offers)
+     this.offers = Object.values(this.offers);
+     this.selectByPrice();
     }
 
-    select(event,offer) {
+    selectOffer(event,offer) {
       offer.selected = true;
+    }
+    toggleOffer(){
+
+    }
+
+    selectByPrice(){
+      let price, selected_offer;
+
+      this.offers.forEach((offer, index) => {
+        if(offer !== 'null') {
+          if(price == undefined){
+            price = offer.price;
+            selected_offer = index;
+          } else if(price < offer.price) {
+            price = offer.price;
+            selected_offer = index;
+          }
+        }
+      });
+      if(price != undefined) {
+        this.offers[selected_offer]['selected'] = true;
+      }
+    }
+    calculatePrice(){
+
     }
 
 

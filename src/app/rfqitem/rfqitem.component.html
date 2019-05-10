@@ -3,7 +3,7 @@
 <td>{{rfqitem.quantity}} </td>
 <td></td>
 <ng-container *ngFor="let offer of offers;" >
-  <td *ngIf="offer != 'null';" [ngClass]='{"selected": offer.selected }' (click)="select($event,offer)" >{{offer.price}}</td>
+  <td *ngIf="offer != 'null';" [ngClass]='{"selected": offer.selected }' (click)="selectOffer($event,offer)" >{{ offer.price | currency :'USD':'symbol':'1.2-2' }}</td>
   <td *ngIf="offer == 'null';">No offer</td>
 </ng-container>
 <td></td>
