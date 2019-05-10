@@ -1,0 +1,11 @@
+
+<td>{{rfqitem.mpn}}</td>
+<td>{{rfqitem.quantity}} </td>
+<td></td>
+<ng-container *ngFor="let offer of offers;" >
+  <td *ngIf="offer != 'null';" [ngClass]='{"selected": offer.selected }' (click)="select($event,offer)" >{{offer.price}}</td>
+  <td *ngIf="offer == 'null';">No offer</td>
+</ng-container>
+<td></td>
+
+
