@@ -1,9 +1,8 @@
 <table class="table table-bordered m-0 p-0">
-  <thead >
-    <tr app-header [suppliers] = "suppliers"></tr>
+  <thead app-header [total] = "total" [suppliers] = "suppliers" >
   </thead>
   <tbody>
-     <tr app-rfqitem *ngFor="let rfqitem of rfqitems;" [offers]='mapped[rfqitem._id]'  [rfqitem] = 'rfqitem' ></tr>
+     <tr (selected)='onSelected($event)' app-rfqitem *ngFor="let rfqitem of rfqitems;" [offers]='mapped[rfqitem._id]'  [rfqitem] = 'rfqitem' ></tr>
   </tbody>
 
 </table>

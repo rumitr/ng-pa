@@ -1,2 +1,12 @@
-  <th colspan=3></th>
+<tr>
+    <th colspan=4>{{ total | currency :'USD':'symbol':'1.2-4' }}</th>
   <th title="{{item}}" *ngFor="let item of suppliers">{{ item | slice: 0:10    }}</th>
+</tr>
+<tr>
+  <th></th>
+<th>MPN</th>
+<th>Quantity</th>
+<th>Value</th>
+
+<th *ngFor="let item of suppliers">coverage(percent) <br> coverage(fraction) <br> supplier total </th>
+</tr>

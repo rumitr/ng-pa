@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit {
   constructor(private pa: PaService) { }
 
   @Input() suppliers;
-  ngOnInit() { }
+  @Input() total;
+  ngOnInit() {
+   }
 
 }

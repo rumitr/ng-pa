@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PaService } from '../service/pa.service';
 
 
@@ -12,7 +12,9 @@ export class RfqitemComponent implements OnInit {
   constructor(private pa: PaService) { }
   @Input() rfqitem;
   @Input() offers;
-  private maps: [];
+  @Output() selected = new EventEmitter<number>();
+  private selectedOffer: '';
+  total: number = 0;
 
 
    ngOnInit() {
@@ -20,11 +22,16 @@ export class RfqitemComponent implements OnInit {
      this.selectByPrice();
     }
 
-    selectOffer(event,offer) {
-      offer.selected = true;
-    }
-    toggleOffer(){
-
+    selectOffer(index) {
+      if (this.selectedOffer !== undefined) {
+        this.offers[this.selectedOffer].selected = false;
+      }
+      const prev_total = this.total;
+      this.offers[index].selected = true;
+      this.total = this.offers[index].price * this.rfqitem.quantity;
+      this.selectedOffer = index;
+      this.selected.emit(this.total- prev_total);
+      console.log('1');
     }
 
     selectByPrice(){
@@ -35,18 +42,15 @@ export class RfqitemComponent implements OnInit {
           if(price == undefined){
             price = offer.price;
             selected_offer = index;
-          } else if(price < offer.price) {
+          } else if(price > offer.price) {
             price = offer.price;
             selected_offer = index;
           }
         }
       });
       if(price != undefined) {
-        this.offers[selected_offer]['selected'] = true;
+        this.selectOffer( selected_offer);
       }
-    }
-    calculatePrice(){
-
     }
 
 

@@ -1,11 +1,9 @@
-
+<td><input type="checkbox" value={{rfqitem._id}} name="selected[]" id=""></td>
 <td>{{rfqitem.mpn}}</td>
-<td>{{rfqitem.quantity}} </td>
-<td></td>
-<ng-container *ngFor="let offer of offers;" >
-  <td *ngIf="offer != 'null';" [ngClass]='{"selected": offer.selected }' (click)="selectOffer($event,offer)" >{{ offer.price | currency :'USD':'symbol':'1.2-2' }}</td>
+<td>{{rfqitem.quantity}} pcs </td>
+<td>{{ total | currency :'USD':'symbol':'1.2-4' }}</td>
+<ng-container *ngFor="let offer of offers; let index = index" >
+  <td *ngIf="offer != 'null';" [ngClass]='{"selected": offer.selected }' (click)="selectOffer(index)" >{{ offer.price | currency :'USD':'symbol':'1.2-4' }}</td>
   <td *ngIf="offer == 'null';">No offer</td>
 </ng-container>
 <td></td>
-
-

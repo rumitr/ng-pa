@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { PaService } from './service/pa.service';
 
 @Component({
@@ -8,12 +8,13 @@ import { PaService } from './service/pa.service';
 })
 export class AppComponent {
   title = 'ng-pa';
-  constructor(private pa: PaService) { }
-   rfq;
-   rfqitems;
-   offers;
-   suppliers;
-   mapped;
+  constructor(private pa: PaService, private cdr: ChangeDetectorRef) { }
+  rfq;
+  rfqitems;
+  offers;
+  suppliers;
+  mapped;
+  total:number = 0;
 
   ngOnInit() {
     this.pa.get().subscribe((data: {rfq: {}, quote_items: {}, rfq_items: {}}) => {
@@ -23,7 +24,6 @@ export class AppComponent {
       this.suppliers = this.getSuppliers();
       this.mapped = this.offerMap();
     });
-
   }
 
   getSuppliers() {
@@ -49,5 +49,10 @@ export class AppComponent {
       map[offer.RfqItem.id][offer.Supplier.id] = offer;
     });
     return map;
+  }
+
+  onSelected(difference: number){
+    this.total += difference;
+    this.cdr.detectChanges();
   }
 }
