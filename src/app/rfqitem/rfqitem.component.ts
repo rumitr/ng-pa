@@ -12,7 +12,7 @@ export class RfqitemComponent implements OnInit {
   constructor(private pa: PaService) { }
   @Input() rfqitem;
   @Input() offers;
-  @Output() selected = new EventEmitter<number>();
+  @Output() selected = new EventEmitter<{}>();
   private selectedOffer: '';
   total: number = 0;
 
@@ -23,20 +23,21 @@ export class RfqitemComponent implements OnInit {
     }
 
     selectOffer(index) {
+      let prev_supplier = '';
       if (this.selectedOffer !== undefined) {
+        prev_supplier = this.offers[this.selectedOffer].Supplier.id;
         this.offers[this.selectedOffer].selected = false;
       }
       const prev_total = this.total;
       this.offers[index].selected = true;
       this.total = this.offers[index].price * this.rfqitem.quantity;
       this.selectedOffer = index;
-      this.selected.emit(this.total- prev_total);
-      console.log('1');
+      const difference = this.total- prev_total;
+      this.selected.emit({ total: this.total, prev_total: prev_total, id: this.rfqitem._id, supplier: this.offers[index].Supplier.id, prev_supplier: prev_supplier });
     }
 
     selectByPrice(){
       let price, selected_offer;
-
       this.offers.forEach((offer, index) => {
         if(offer !== 'null') {
           if(price == undefined){

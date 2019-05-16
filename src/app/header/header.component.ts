@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() suppliers;
   @Input() total;
+  @Input() count;
   ngOnInit() {
    }
 

@@ -1,6 +1,6 @@
 <tr>
-    <th colspan=4>{{ total | currency :'USD':'symbol':'1.2-4' }}</th>
-  <th title="{{item}}" *ngFor="let item of suppliers">{{ item | slice: 0:10    }}</th>
+  <th colspan=4>{{ total | currency :'USD':'symbol':'1.2-4' }}</th>
+  <th title="{{supplier}}" *ngFor="let supplier of suppliers">{{ supplier.name | slice: 0:10    }}</th>
 </tr>
 <tr>
   <th></th>
@@ -8,5 +8,5 @@
 <th>Quantity</th>
 <th>Value</th>
 
-<th *ngFor="let item of suppliers">coverage(percent) <br> coverage(fraction) <br> supplier total </th>
+<th class="text-center" *ngFor="let supplier of suppliers">{{(supplier['coverage']/count)*100}} % <br> {{supplier['coverage']}}/{{count}} <br> {{ supplier.total | currency :'USD':'symbol':'1.2-4' }} </th>
 </tr>
