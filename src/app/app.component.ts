@@ -8,12 +8,15 @@ import { PaService } from './service/pa.service';
 })
 export class AppComponent {
   title = 'ng-pa';
-  constructor(private pa: PaService, private cdr: ChangeDetectorRef) { }
+  constructor(private pa: PaService, private cdr: ChangeDetectorRef) {
+    this.count = 0;
+   }
   rfq;
   rfqitems;
   offers;
   suppliers;
   mapped;
+  count;
   total:number = 0;
 
   ngOnInit() {
@@ -23,6 +26,7 @@ export class AppComponent {
       this.offers = data.quote_items;
       this.suppliers = this.mapSupplier(data.suppliers);
       // this.suppliers = data.suppliers;
+      this.count = this.rfqitems.length;
 
       this.mapped = this.offerMap();
     });
@@ -34,7 +38,6 @@ export class AppComponent {
       supplier['coverage'] = 0;
       supplier['total'] = 0;
     });
-    console.log(temp);
     return suppliers;
   }
 
@@ -72,14 +75,12 @@ export class AppComponent {
       map[offer.RfqItem.id][offer.Supplier.id] = offer;
       let supplier = this.getSupplierById(offer.Supplier.id);
       supplier['coverage']++;
-      console.log(supplier['name'], supplier['coverage']);
     });
     return map;
   }
 
 
   onSelected(item: {total: number, prev_total: number, id: string, supplier: string, prev_supplier: string}){
-    console.log(item.total, item.prev_total, item.id);
     let target;
     for(let i = 0; i < this.rfqitems.length; i++) {
       if(this.rfqitems[i]._id === item.id) {
@@ -94,8 +95,6 @@ export class AppComponent {
     }
     const supplier = this.getSupplierById(item.supplier);
     supplier['total'] += item.total;
-    console.log(item.prev_supplier, item.supplier)
-
     this.total += item.total - item.prev_total;
     target.total = item.total;
     this.cdr.detectChanges();
@@ -109,9 +108,10 @@ export class AppComponent {
 
   sortByCoverage() {
     // this.rfqitems.sort((a,b) =>  { console.log(a, b, a.total - b.total ); a.total - b.total});
-    this.suppliers.sort((a,b) =>  a.coverage - b.coverage);
+    this.suppliers.sort((a,b) => b.coverage - a.coverage);
+    // console.log(this.suppliers);
     this.mapped = this.offerMap();
-    this.cdr.detectChanges();
+    // this.cdr.detectChanges();
 
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { PaService } from '../service/pa.service';
 
 
@@ -7,7 +7,7 @@ import { PaService } from '../service/pa.service';
   templateUrl: './rfqitem.component.html',
   styleUrls: ['./rfqitem.component.scss']
 })
-export class RfqitemComponent implements OnInit {
+export class RfqitemComponent implements OnInit, OnChanges {
 
   constructor(private pa: PaService) { }
   @Input() rfqitem;
@@ -18,8 +18,11 @@ export class RfqitemComponent implements OnInit {
 
 
    ngOnInit() {
-     this.offers = Object.values(this.offers);
-     this.selectByPrice();
+    this.selectByPrice();
+    }
+
+    ngOnChanges() {
+      this.offers = Object.values(this.offers);
     }
 
     selectOffer(index) {
